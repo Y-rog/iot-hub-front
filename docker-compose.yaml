@@ -1,0 +1,7 @@
+services:
+  front:
+    build: .
+    container_name: iot-hub-front
+    ports:
+      - "8091:80"
+    restart: always
