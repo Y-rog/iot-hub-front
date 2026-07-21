@@ -1,0 +1,94 @@
+<!-- Contenu principal -->
+<div class="dashboard-content">
+
+  <!-- Chargement -->
+  <div class="loading" *ngIf="loading">Chargement...</div>
+
+  <!-- Erreur -->
+  <div class="error-banner" *ngIf="error">
+    <mat-icon>error</mat-icon>
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error">
+
+    <!-- Stats rapides : capteurs / thermostats / alertes -->
+    <app-stats-row [devices]="devices" [alerts]="alerts" />
+
+    <!-- ═══ Capteurs Airthings ═══ -->
+    <section>
+      <h2 class="section-title">
+        <mat-icon>sensors</mat-icon>
+        Capteurs Airthings
+      </h2>
+
+      <div class="airthings-grid">
+        <app-airthings-card
+          *ngFor="let device of airthingsDevices"
+          [device]="device"
+          [sensorData]="sensorData[device.id]"/>
+      </div>
+    </section>
+
+    <!-- ═══ Thermostats Sinopé ═══ -->
+    <section>
+      <h2 class="section-title">
+        <mat-icon>thermostat</mat-icon>
+        Thermostats Sinopé
+      </h2>
+
+      <!-- Contrôle global : appliquer une température à tous -->
+      <div class="global-temp-control">
+        <mat-form-field appearance="outline" class="global-temp-field">
+          <input matInput
+        type="number"
+        min="7"
+        max="22"
+        step="0.5"
+        placeholder="Ex: 21°C"
+        [(ngModel)]="globalTemperature"/>
+        </mat-form-field>
+        <button mat-raised-button
+              class="apply-all-btn"
+              (click)="setAllTemperatures()">
+          <mat-icon>done_all</mat-icon>
+          Appliquer à tous
+        </button>
+      </div>
+
+      <!-- Grille des thermostats -->
+      <div class="thermostat-grid">
+        <app-thermostat-card
+          *ngFor="let device of sinopeDevices"
+          [device]="device"
+          [currentTemp]="thermostatTemps[device.id]"
+          [isUpdating]="isUpdating(device.id)"
+          (temperatureSet)="setTemperature($event)"/>
+      </div>
+    </section>
+
+    <!-- ═══ Alertes récentes ═══ -->
+    <section>
+      <h2 class="section-title">
+        <mat-icon color="warn">notifications_active</mat-icon>
+        Alertes récentes
+      </h2>
+
+      <!-- Aucune alerte -->
+      <mat-card class="no-alert-card" *ngIf="alerts.length === 0">
+        <mat-card-content>
+          <mat-icon color="primary">check_circle</mat-icon>
+          <span>Aucune alerte — tout va bien ! ✅</span>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Liste des alertes non lues -->
+      <div class="alert-list">
+        <app-alert-card
+          *ngFor="let alert of unreadAlerts"
+          [alert]="alert"/>
+      </div>
+    </section>
+
+  </div>
+</div>

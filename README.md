@@ -1,27 +1,65 @@
-# IotHubFront
+# IoT Hub — Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
+Dashboard Angular pour piloter et surveiller mon installation domotique personnelle : capteurs de qualité d'air Airthings et thermostats Zigbee Sinopé, connectés à mon API IoT Hub (https://github.com/Y-rog/api-iot-hub) auto-hébergée sur Raspberry Pi.
 
-## Development server
+## Fonctionnalités
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Capteurs Airthings — température, CO2, humidité, radon, VOC, pression, particules fines (PM1/PM2.5) en temps réel
+- Thermostats Sinopé — lecture et réglage de la température via MQTT/Zigbee, individuellement ou en un clic pour tous les thermostats
+- Alertes — notifications automatiques sur seuils dépassés (qualité d'air, radon...)
+- Dashboard responsive — mise en page adaptée desktop et mobile
 
-## Code scaffolding
+## Stack technique
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular 18 (standalone components)
+- Angular Material (thème sombre personnalisé)
+- RxJS pour la gestion des flux de données
+- TypeScript strict
 
-## Build
+## Architecture
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+src/app/
+  dashboard/          Page principale
+  shared/
+    stats-row/          Compteurs (capteurs / thermostats / alertes)
+    airthings-card/     Carte capteur de qualité d'air
+    thermostat-card/    Carte thermostat (lecture + réglage)
+    alert-card/         Carte alerte
+  core/
+    services/        ApiService (communication avec le backend)
+    model/            Interfaces TypeScript (Device, Alert, DataPoint)
 
-## Running unit tests
+## Prérequis
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Node.js 20+
+- Angular CLI 18
+- L'API backend (https://github.com/Y-rog/api-iot-hub) doit être démarrée et accessible
 
-## Running end-to-end tests
+## Installation
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+npm install
 
-## Further help
+## Configuration
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+L'URL de l'API est définie dans src/environments/environment.ts :
+
+export const environment = {
+  production: false,
+  apiUrl: 'http://<votre-ip>:8090/api'
+};
+
+## Démarrage
+
+ng serve
+
+L'application est accessible sur http://localhost:4200.
+
+## Projet complet
+
+Ce frontend fonctionne avec :
+- api-iot-hub (https://github.com/Y-rog/api-iot-hub) — le backend Spring Boot
+- Un Raspberry Pi 4 exécutant Zigbee2MQTT + Mosquitto pour la communication avec les appareils Zigbee
+
+---
+
+Projet personnel réalisé par Grégory Fulgueiras (https://y-rog.com) dans le cadre de l'apprentissage de l'architecture hexagonale et de l'intégration IoT.

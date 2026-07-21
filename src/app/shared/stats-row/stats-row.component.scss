@@ -1,0 +1,98 @@
+// Variables de couleur (dark mode)
+$bg-card: #1a1d2e;
+$border: #2a2d4a;
+$primary: #4f9cf9;
+$warn: #f87171;
+$text-primary: #e2e8f0;
+$text-secondary: #94a3b8;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Rangée des 3 cartes stats, toujours sur une ligne
+.stats-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+// Carte individuelle — icône, valeur, libellé tous alignés sur une ligne
+// Tailles agrandies pour desktop
+.stat-card {
+  flex: 1;
+  min-width: 0;
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s;
+
+  &:hover {
+    border-color: $primary;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(79, 156, 249, 0.15);
+  }
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: $primary;
+    flex-shrink: 0;
+  }
+
+  .stat-value {
+    font-size: 1.5em;
+    font-weight: 800;
+    color: $text-primary;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .stat-label {
+    font-size: 0.75em;
+    color: $text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Mise en avant visuelle si des alertes sont actives
+  &.alert-active {
+    border-color: $warn;
+    mat-icon { color: $warn; }
+    .stat-value { color: $warn; }
+  }
+}
+
+// Responsive mobile — revient à un format compact
+@media (max-width: 600px) {
+  .stats-row {
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    padding: 6px 8px;
+    gap: 4px;
+    border-radius: 10px;
+
+    mat-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+    }
+
+    .stat-value { font-size: 0.9em; }
+    .stat-label { font-size: 0.55em; letter-spacing: 0; }
+  }
+}

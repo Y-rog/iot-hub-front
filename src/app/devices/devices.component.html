@@ -1,0 +1,30 @@
+<div class="devices">
+  <h2>🏠 Mes appareils</h2>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="loading">
+    Chargement...
+  </div>
+
+  <!-- Erreur -->
+  <div class="error" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <!-- Liste des devices -->
+  <div class="device-grid" *ngIf="!loading && !error">
+    <div class="device-card" *ngFor="let device of devices">
+      <div class="device-header">
+        <h3>{{ device.name }}</h3>
+        <span class="status" [class.connected]="device.connected">
+          {{ device.connected ? '🟢' : '🔴' }}
+        </span>
+      </div>
+      <p class="brand">{{ device.brand }}</p>
+      <p class="type">{{ device.type }}</p>
+      <p class="last-seen">
+        Vu le {{ device.lastSeen | date:'dd/MM/yyyy HH:mm' }}
+      </p>
+    </div>
+  </div>
+</div>

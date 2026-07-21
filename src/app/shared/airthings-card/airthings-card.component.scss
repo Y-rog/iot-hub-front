@@ -1,0 +1,248 @@
+// Variables de couleur (dark mode)
+$bg-card: #1a1d2e;
+$border: #2a2d4a;
+$primary: #4f9cf9;
+$airthings: #00e5ff;
+$success: #4ade80;
+$warn: #f87171;
+$text-primary: #e2e8f0;
+$text-secondary: #94a3b8;
+
+// Card principale
+.airthings-card {
+  background: $bg-card !important;
+  border: 1px solid $border !important;
+  border-radius: 16px !important;
+  transition: all 0.3s !important;
+
+  &:hover {
+    border-color: $primary !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3) !important;
+  }
+
+  mat-card-content {
+    padding: 10px 14px !important;
+  }
+}
+
+// Ligne repliée, format grid identique aux cartes thermostat
+// (icône | nom | statut | alerte | flèche)
+.airthings-row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 6px 6px 20px;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+// Icône ronde à gauche (device)
+.card-icon {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+
+  mat-icon {
+    color: white;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.airthings-icon {
+  background: linear-gradient(135deg, #00bcd4, #00e5ff);
+}
+
+// Nom complet de la pièce, jamais tronqué
+// Taille confortable sur desktop, réduite sur mobile
+.device-name {
+  color: $text-primary;
+  font-size: 0.85em;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+// Petit point coloré = statut connecté/déconnecté (ligne repliée)
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $text-secondary;
+
+  &.connected {
+    background: $success;
+  }
+}
+
+// Point rouge clignotant si un capteur est en mauvais ou critique état
+.alert-dot {
+  width: 6px;
+  height: 6px;
+  background: $warn;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+// Flèche indiquant l'état déplié/replié — visible uniquement sur mobile
+.expand-arrow {
+  color: $primary;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s;
+
+  &.rotated {
+    transform: rotate(180deg);
+  }
+}
+
+// Masqué par défaut, réapparaît sur mobile
+.mobile-only {
+  display: none;
+}
+
+// Bloc capteurs — toujours visible sur desktop, dépliable sur mobile
+.expanded-content {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid $border;
+}
+
+// Statut + dernière mise à jour, sur une ligne compacte
+.expanded-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 0.78em;
+}
+
+.status-chip {
+  color: $text-secondary;
+  &.connected { color: $success; font-weight: 600; }
+}
+
+.last-seen {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: $text-secondary;
+  margin: 0;
+
+  mat-icon { font-size: 13px; width: 13px; height: 13px; }
+}
+
+// Grille des capteurs — répartie uniformément sur toute la largeur de la carte
+.sensor-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+// Un capteur individuel — icône + valeur centrées, dans une pastille discrète
+.sensor-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  padding: 10px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: background 0.2s;
+  box-sizing: border-box; // le padding est inclus dans la largeur, pas ajouté en plus
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  mat-icon {
+    color: $airthings;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  // Couleur de la valeur selon le seuil de qualité
+  .sensor-value {
+    font-size: 1em;
+    font-weight: 800;
+    white-space: nowrap;
+
+    &.good     { color: #4ade80; }
+    &.medium   { color: #fbbf24; }
+    &.bad      { color: #f87171; }
+    &.critical {
+      color: #f87171;
+      animation: blink 1s infinite;
+    }
+  }
+
+  // Libellé masqué visuellement, disponible en tooltip (attribut title dans le HTML)
+  .sensor-label {
+    display: none;
+  }
+}
+
+.loading-sensors {
+  color: $text-secondary;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+// Animation clignotante utilisée par l'alerte et les valeurs critiques
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+// Responsive mobile
+@media (max-width: 600px) {
+  // La flèche redevient visible
+  .mobile-only {
+    display: flex;
+  }
+
+  // Le contenu est caché tant que la carte n'est pas dépliée
+  .expanded-content {
+    display: none;
+
+    &.expanded {
+      display: block;
+    }
+  }
+
+  // Grille 2 colonnes, plus lisible au doigt qu'un défilement serré
+  .sensor-grid {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .sensor-item {
+    flex: 0 0 calc(50% - 4px);
+    justify-content: flex-start;
+    padding: 8px 10px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .sensor-value {
+      font-size: 0.9em;
+    }
+  }
+
+  .device-name {
+    font-size: 0.65em;
+  }
+}

@@ -1,0 +1,155 @@
+// Variables de couleur (dark mode)
+$bg-card: #1a1d2e;
+$border: #2a2d4a;
+$primary: #4f9cf9;
+$sinope: #ff6b6b;
+$success: #4ade80;
+$text-primary: #e2e8f0;
+$text-secondary: #94a3b8;
+
+// Card principale
+.thermostat-card {
+  background: $bg-card !important;
+  border: 1px solid $border !important;
+  border-radius: 16px !important;
+  transition: all 0.3s !important;
+
+  &:hover {
+    border-color: $primary !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3) !important;
+  }
+
+  mat-card-content {
+    padding: 10px 14px !important;
+  }
+}
+
+// Layout en grid à colonnes fixes
+// Garantit un alignement identique sur toutes les cartes,
+// peu importe la longueur du nom
+// (icône | nom | statut | temp actuelle | input | bouton)
+.thermostat-row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 6px 55px 50px 32px;
+  align-items: center;
+  gap: 8px;
+}
+
+// Icône ronde à gauche (device)
+.card-icon {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+
+  mat-icon {
+    color: white;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// Dégradé orange/rouge pour identifier les thermostats Sinopé
+.sinope-icon {
+  background: linear-gradient(135deg, #ff5722, #ff6b6b);
+
+  // Grisé si le device ne répond plus
+  &.disconnected {
+    background: $text-secondary;
+  }
+}
+
+// Nom complet de la pièce, jamais tronqué
+// Taille confortable sur desktop, réduite sur mobile
+.device-name {
+  color: $text-primary;
+  font-size: 0.85em;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+// Petit point coloré = statut connecté/déconnecté
+// Remplace un badge texte pour gagner de la place
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $text-secondary;
+
+  &.connected {
+    background: $success;
+  }
+}
+
+// Température actuelle lue depuis l'historique
+// Taille confortable sur desktop, réduite sur mobile
+.current-temp {
+  color: $text-primary;
+  font-weight: 800;
+  font-size: 1em;
+  white-space: nowrap;
+  text-align: right;
+}
+
+// Champ de saisie pour la nouvelle consigne
+// Les ::ng-deep compressent le mat-form-field, qui réserve
+// par défaut de la place pour les messages d'erreur/hint
+.temp-field {
+  width: 50px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    padding: 0 !important;
+    height: 32px !important;
+  }
+
+  ::ng-deep .mat-mdc-form-field-flex {
+    height: 32px !important;
+    align-items: center !important;
+  }
+
+  ::ng-deep .mat-mdc-form-field-infix {
+    padding: 0 !important;
+    min-height: unset !important;
+    display: flex;
+    align-items: center;
+  }
+
+  // Supprime l'espace réservé au hint/erreur sous le champ
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+  }
+
+  ::ng-deep input {
+    text-align: center;
+    font-size: 0.78em;
+    color: $text-primary !important;
+  }
+}
+
+// Bouton "Régler" (icône check, ou sablier pendant la requête)
+.set-btn {
+  width: 32px;
+  height: 32px;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+// Responsive mobile — noms et températures reviennent à une taille compacte
+@media (max-width: 600px) {
+  .device-name {
+    font-size: 0.65em;
+  }
+
+  .current-temp {
+    font-size: 0.85em;
+  }
+}

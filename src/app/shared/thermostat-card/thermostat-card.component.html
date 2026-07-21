@@ -1,0 +1,38 @@
+<mat-card class="thermostat-card">
+  <mat-card-content>
+    <div class="thermostat-row">
+
+      <div class="card-icon sinope-icon" [class.disconnected]="!device.connected">
+        <mat-icon>thermostat</mat-icon>
+      </div>
+
+      <span class="device-name">{{ formatDeviceName(device.name) }}</span>
+      <span class="status-dot" [class.connected]="device.connected"></span>
+
+      <span class="current-temp" *ngIf="currentTemp !== null">
+        {{ currentTemp | number:'1.1-1' }}°C
+      </span>
+
+      <mat-form-field appearance="outline" class="temp-field">
+        <input matInput
+          type="number"
+          min="7"
+          max="22"
+          step="0.5"
+          placeholder="°C"
+          [disabled]="isUpdating"
+          [(ngModel)]="temperature"
+          (keyup.enter)="onSetTemperature()"/>
+      </mat-form-field>
+
+      <button mat-icon-button
+              color="primary"
+              class="set-btn"
+              [disabled]="isUpdating || temperature === null"
+              (click)="onSetTemperature()">
+        <mat-icon>{{ isUpdating ? 'hourglass_empty' : 'check' }}</mat-icon>
+      </button>
+
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,105 @@
+<mat-card class="airthings-card">
+  <mat-card-content>
+
+    <!-- Ligne compacte, cliquable seulement sur mobile -->
+    <div class="airthings-row" (click)="toggleExpand()">
+
+      <div class="card-icon airthings-icon">
+        <mat-icon>air</mat-icon>
+      </div>
+
+      <span class="device-name">{{ formatDeviceName(device.name) }}</span>
+
+      <span class="status-dot" [class.connected]="device.connected"></span>
+
+      <!-- Point rouge si un capteur est en mauvais ou critique état -->
+      <span class="alert-dot" *ngIf="hasAlert()"></span>
+
+      <!-- Flèche visible uniquement sur mobile -->
+      <mat-icon class="expand-arrow mobile-only" [class.rotated]="isExpanded">
+        expand_more
+      </mat-icon>
+
+    </div>
+
+    <!-- Toujours affiché sur desktop, dépliable via clic sur mobile -->
+    <div class="expanded-content" [class.expanded]="isExpanded">
+
+      <div class="expanded-meta">
+        <span class="status-chip" [class.connected]="device.connected">
+          {{ device.connected ? '● Connecté' : '● Déconnecté' }}
+        </span>
+        <p class="last-seen">
+          <mat-icon>schedule</mat-icon>
+          {{ device.lastSeen | date:'dd/MM HH:mm' }}
+        </p>
+      </div>
+
+      <div class="sensor-grid" *ngIf="sensorData">
+
+        <div class="sensor-item" *ngIf="sensorData['temp']" title="Température">
+          <mat-icon>thermostat</mat-icon>
+          <span [class]="'sensor-value ' + getSensorStatus('temp', sensorData['temp'])">
+            {{ sensorData['temp'] | number:'1.1-1' }}°C
+          </span>
+        </div>
+
+        <div class="sensor-item" *ngIf="sensorData['co2']" title="CO2">
+          <mat-icon>co2</mat-icon>
+          <span [class]="'sensor-value ' + getSensorStatus('co2', sensorData['co2'])">
+            {{ sensorData['co2'] | number:'1.0-0' }} ppm
+          </span>
+        </div>
+
+        <div class="sensor-item" *ngIf="sensorData['humidity']" title="Humidité">
+          <mat-icon>water_drop</mat-icon>
+          <span [class]="'sensor-value ' + getSensorStatus('humidity', sensorData['humidity'])">
+            {{ sensorData['humidity'] | number:'1.0-0' }}%
+          </span>
+        </div>
+
+        <div class="sensor-item" *ngIf="sensorData['radonShortTermAvg']" title="Radon">
+          <mat-icon>warning</mat-icon>
+          <span [class]="'sensor-value ' + getSensorStatus('radonShortTermAvg', sensorData['radonShortTermAvg'])">
+            {{ sensorData['radonShortTermAvg'] | number:'1.0-0' }} Bq/m³
+          </span>
+        </div>
+
+        <div class="sensor-item" *ngIf="sensorData['voc']" title="VOC">
+          <mat-icon>science</mat-icon>
+          <span [class]="'sensor-value ' + getSensorStatus('voc', sensorData['voc'])">
+            {{ sensorData['voc'] | number:'1.0-0' }}
+          </span>
+        </div>
+
+        <div class="sensor-item" *ngIf="sensorData['pressure']" title="Pression">
+          <mat-icon>compress</mat-icon>
+          <span class="sensor-value">
+            {{ sensorData['pressure'] | number:'1.0-0' }} hPa
+          </span>
+        </div>
+
+        <div class="sensor-item" *ngIf="sensorData['pm25']" title="PM2.5">
+          <mat-icon>blur_on</mat-icon>
+          <span [class]="'sensor-value ' + getSensorStatus('pm25', sensorData['pm25'])">
+            {{ sensorData['pm25'] | number:'1.0-0' }} μg/m³
+          </span>
+        </div>
+
+        <div class="sensor-item" *ngIf="sensorData['pm1']" title="PM1">
+          <mat-icon>blur_circular</mat-icon>
+          <span [class]="'sensor-value ' + getSensorStatus('pm1', sensorData['pm1'])">
+            {{ sensorData['pm1'] | number:'1.0-0' }} μg/m³
+          </span>
+        </div>
+
+      </div>
+
+      <div class="loading-sensors" *ngIf="!sensorData">
+        Chargement...
+      </div>
+
+    </div>
+
+  </mat-card-content>
+</mat-card>

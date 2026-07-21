@@ -1,0 +1,21 @@
+<mat-card class="alert-card">
+  <mat-card-content>
+    <div class="alert-row">
+
+      <div class="card-icon alert-icon">
+        <mat-icon>warning</mat-icon>
+      </div>
+
+      <div class="alert-text">
+        <span class="alert-title">{{ alert.sensorType | uppercase }} = {{ alert.value }}</span>
+        <span class="alert-message">{{ alert.message }}</span>
+      </div>
+
+      <span class="last-seen">
+        <mat-icon>schedule</mat-icon>
+        {{ alert.createdAt | date:'dd/MM HH:mm' }}
+      </span>
+
+    </div>
+  </mat-card-content>
+</mat-card>

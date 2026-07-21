@@ -1,0 +1,25 @@
+.navbar {
+  background: #13162d !important;
+  border-bottom: 1px solid #2a2d4a;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4) !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-title {
+  margin-left: 12px;
+  font-size: 1.2em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #4f9cf9, #00e5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.spacer { flex: 1 1 auto; }
+
+main {
+  background: #0f1117;
+  min-height: calc(100vh - 64px);
+}

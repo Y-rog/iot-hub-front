@@ -1,0 +1,127 @@
+// Variables de couleur (dark mode)
+$bg-card: #1a1d2e;
+$border: #2a2d4a;
+$warn: #f87171;
+$text-primary: #e2e8f0;
+$text-secondary: #94a3b8;
+
+// Card principale
+.alert-card {
+  background: $bg-card !important;
+  border: 1px solid $border !important;
+  border-left: 4px solid $warn !important;
+  border-radius: 12px !important;
+
+  mat-card-content {
+    padding: 12px 16px !important;
+  }
+}
+
+// Layout compact sur une ligne
+// (icône | titre + message | date)
+.alert-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// Icône d'alerte
+// Taille agrandie pour desktop
+.card-icon {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+
+  mat-icon {
+    color: white;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.alert-icon {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+}
+
+// Titre (type de capteur + valeur) et message empilés
+.alert-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.alert-title {
+  color: $warn;
+  font-size: 0.95em;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.alert-message {
+  color: $text-secondary;
+  font-size: 0.85em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Date, à droite, jamais compressée
+.last-seen {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: $text-secondary;
+  font-size: 0.8em;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// Responsive mobile — revient à un format compact
+@media (max-width: 600px) {
+  .alert-row {
+    gap: 10px;
+  }
+
+  .card-icon {
+    width: 24px;
+    height: 24px;
+
+    mat-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .alert-title {
+    font-size: 0.75em;
+  }
+
+  .alert-message {
+    font-size: 0.7em;
+  }
+
+  .last-seen {
+    font-size: 0.68em;
+
+    mat-icon {
+      font-size: 12px;
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
