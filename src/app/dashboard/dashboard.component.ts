@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiService } from '../core/services/api.service';
+import { AuthService } from '../core/services/auth.service';
 import { Device } from '../core/models/device.model';
 import { Alert } from '../core/models/alert.model';
 import { Subscription } from 'rxjs';
@@ -65,7 +67,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private apiService: ApiService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -196,6 +200,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         })
       );
     });
+  }
+
+  // Déconnecte l'utilisateur et redirige vers le login
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   // Formate le nom du device (utilisé aussi pour les messages d'erreur)

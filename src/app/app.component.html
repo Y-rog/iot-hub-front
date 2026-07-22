@@ -3,6 +3,13 @@
   <mat-icon>home</mat-icon>
   <span class="app-title">IoT Hub</span>
   <span class="spacer"></span>
+
+  <button mat-icon-button
+          *ngIf="authService.isLoggedIn()"
+          (click)="logout()"
+          aria-label="Déconnexion">
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>
 
 <!-- Contenu des pages -->

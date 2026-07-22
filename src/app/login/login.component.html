@@ -1,0 +1,52 @@
+<div class="login-page">
+  <mat-card class="login-card">
+    <mat-card-content>
+
+      <h1 class="login-title">IoT Hub</h1>
+
+      <form (ngSubmit)="onSubmit()">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput
+                 type="email"
+                 name="email"
+                 [(ngModel)]="email"
+                 required
+                 [disabled]="isLoading"/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput
+                    [type]="hidePassword ? 'password' : 'text'"
+                    name="password"
+                    [(ngModel)]="password"
+                    required
+                    [disabled]="isLoading"/>
+            <button mat-icon-button
+                    matSuffix
+                    type="button"
+                    (click)="togglePasswordVisibility()"
+                    [attr.aria-label]="'Afficher le mot de passe'"
+                    [attr.aria-pressed]="!hidePassword">
+                <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            </mat-form-field>
+
+        <p class="error-message" *ngIf="error">{{ error }}</p>
+
+        <button mat-raised-button
+                color="primary"
+                type="submit"
+                class="login-btn"
+                [disabled]="isLoading || !email || !password">
+          <mat-icon>{{ isLoading ? 'hourglass_empty' : 'login' }}</mat-icon>
+          {{ isLoading ? 'Connexion...' : 'Se connecter' }}
+        </button>
+
+      </form>
+
+    </mat-card-content>
+  </mat-card>
+</div>
