@@ -12,6 +12,11 @@
 
   <div *ngIf="!loading && !error">
 
+    <!-- Dernière mise à jour -->
+    <span class="last-updated" *ngIf="lastUpdated">
+      Mis à jour à {{ lastUpdated | date:'HH:mm:ss' }}
+    </span>
+
     <!-- Stats rapides : capteurs / thermostats / alertes -->
     <app-stats-row [devices]="devices" [alerts]="alerts" />
 

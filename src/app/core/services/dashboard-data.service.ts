@@ -27,6 +27,9 @@ export class DashboardDataService {
   private errorSubject = new BehaviorSubject<string | null>(null);
   error$ = this.errorSubject.asObservable();
 
+  private lastUpdatedSubject = new BehaviorSubject<Date | null>(null);
+  lastUpdated$ = this.lastUpdatedSubject.asObservable();
+
   constructor(private apiService: ApiService) {}
 
   // Charge tout : devices, alertes, mesures capteurs, températures thermostats
@@ -37,6 +40,7 @@ export class DashboardDataService {
       next: (data) => {
         this.devicesSubject.next(data);
         this.loadingSubject.next(false);
+        this.lastUpdatedSubject.next(new Date());  // ← ajouté
 
         data.filter(d => d.brand === 'AIRTHINGS')
             .forEach(d => this.loadSensorData(d.id));

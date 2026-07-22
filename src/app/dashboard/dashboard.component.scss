@@ -175,6 +175,13 @@ section {
   margin-bottom: 20px;
 }
 
+.last-updated {
+  display: block;
+  color: $text-secondary;
+  font-size: 0.75em;
+  margin-bottom: 12px;
+}
+
 // Responsive tablette → 2 par ligne
 @media (max-width: 1100px) {
   .thermostat-grid {

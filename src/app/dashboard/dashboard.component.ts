@@ -55,6 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   thermostatTemps: { [deviceId: string]: number } = {};
   globalTemperature: number | null = null;
   updatingDeviceIds = new Set<string>();
+  lastUpdated: Date | null = null;
 
   private subscription = new Subscription();
 
@@ -77,6 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscription.add(this.dashboardData.thermostatTemps$.subscribe(t => this.thermostatTemps = t));
     this.subscription.add(this.dashboardData.loading$.subscribe(l => this.loading = l));
     this.subscription.add(this.dashboardData.error$.subscribe(e => this.error = e));
+    this.subscription.add(this.dashboardData.lastUpdated$.subscribe(d => this.lastUpdated = d));
 
     this.dashboardData.loadAll();
     this.pushNotificationService.subscribeToNotifications();
