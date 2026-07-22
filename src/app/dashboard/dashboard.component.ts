@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { interval } from 'rxjs';
 import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 import { PushNotificationService } from '../core/services/push-notification.service';
@@ -57,6 +58,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
+  // Intervalle de rafraîchissement automatique (5 minutes)
+  private readonly REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+
   constructor(
     private apiService: ApiService,
     private snackBar: MatSnackBar,
@@ -67,7 +71,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // S'abonne à l'état exposé par le service
     this.subscription.add(this.dashboardData.devices$.subscribe(d => this.devices = d));
     this.subscription.add(this.dashboardData.alerts$.subscribe(a => this.alerts = a));
     this.subscription.add(this.dashboardData.sensorData$.subscribe(s => this.sensorData = s));
@@ -77,6 +80,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.dashboardData.loadAll();
     this.pushNotificationService.subscribeToNotifications();
+
+    // Rafraîchit automatiquement toutes les 5 minutes
+    this.subscription.add(
+      interval(this.REFRESH_INTERVAL_MS).subscribe(() => {
+        this.dashboardData.loadAll();
+      })
+    );
   }
 
   get airthingsDevices(): Device[] {
