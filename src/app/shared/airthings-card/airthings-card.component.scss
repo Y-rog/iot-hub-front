@@ -145,19 +145,18 @@ $text-secondary: #94a3b8;
   flex-wrap: nowrap;
 }
 
-// Un capteur individuel — icône + valeur centrées, dans une pastille discrète
+// Un capteur individuel — icône, libellé, valeur alignés horizontalement
 .sensor-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  gap: 4px;
   flex: 1;
   min-width: 0;
-  padding: 10px 8px;
+  padding: 8px 6px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.03);
   transition: background 0.2s;
-  box-sizing: border-box; // le padding est inclus dans la largeur, pas ajouté en plus
+  box-sizing: border-box;
 
   &:hover {
     background: rgba(255, 255, 255, 0.06);
@@ -165,17 +164,27 @@ $text-secondary: #94a3b8;
 
   mat-icon {
     color: $airthings;
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
   }
 
-  // Couleur de la valeur selon le seuil de qualité
+  // Libellé du capteur (CO2, Radon, etc.)
+  .sensor-label {
+    font-size: 0.62em;
+    color: $text-secondary;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  // Valeur poussée à droite, couleur selon le seuil de qualité
   .sensor-value {
-    font-size: 1em;
+    font-size: 0.8em;
     font-weight: 800;
     white-space: nowrap;
+    margin-left: auto;
 
     &.good     { color: #4ade80; }
     &.medium   { color: #fbbf24; }
@@ -184,11 +193,6 @@ $text-secondary: #94a3b8;
       color: #f87171;
       animation: blink 1s infinite;
     }
-  }
-
-  // Libellé masqué visuellement, disponible en tooltip (attribut title dans le HTML)
-  .sensor-label {
-    display: none;
   }
 }
 
@@ -228,17 +232,20 @@ $text-secondary: #94a3b8;
 
   .sensor-item {
     flex: 0 0 calc(50% - 4px);
-    justify-content: flex-start;
-    padding: 8px 10px;
+    padding: 6px 8px;
 
     mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+    }
+
+    .sensor-label {
+      font-size: 0.55em;
     }
 
     .sensor-value {
-      font-size: 0.9em;
+      font-size: 0.72em;
     }
   }
 

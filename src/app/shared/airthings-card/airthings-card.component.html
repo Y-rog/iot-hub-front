@@ -37,57 +37,65 @@
 
       <div class="sensor-grid" *ngIf="sensorData">
 
-        <div class="sensor-item" *ngIf="sensorData['temp']" title="Température">
+        <div class="sensor-item" *ngIf="sensorData['temp']">
           <mat-icon>thermostat</mat-icon>
+          <span class="sensor-label">Temp.</span>
           <span [class]="'sensor-value ' + getSensorStatus('temp', sensorData['temp'])">
             {{ sensorData['temp'] | number:'1.1-1' }}°C
           </span>
         </div>
 
-        <div class="sensor-item" *ngIf="sensorData['co2']" title="CO2">
-          <mat-icon>co2</mat-icon>
+        <div class="sensor-item" *ngIf="sensorData['co2']">
+          <mat-icon>cloud</mat-icon>
+          <span class="sensor-label">CO2</span>
           <span [class]="'sensor-value ' + getSensorStatus('co2', sensorData['co2'])">
             {{ sensorData['co2'] | number:'1.0-0' }} ppm
           </span>
         </div>
 
-        <div class="sensor-item" *ngIf="sensorData['humidity']" title="Humidité">
+        <div class="sensor-item" *ngIf="sensorData['humidity']">
           <mat-icon>water_drop</mat-icon>
+          <span class="sensor-label">Humidité</span>
           <span [class]="'sensor-value ' + getSensorStatus('humidity', sensorData['humidity'])">
             {{ sensorData['humidity'] | number:'1.0-0' }}%
           </span>
         </div>
 
-        <div class="sensor-item" *ngIf="sensorData['radonShortTermAvg']" title="Radon">
+        <div class="sensor-item" *ngIf="sensorData['radonShortTermAvg']">
           <mat-icon>warning</mat-icon>
+          <span class="sensor-label">Radon</span>
           <span [class]="'sensor-value ' + getSensorStatus('radonShortTermAvg', sensorData['radonShortTermAvg'])">
             {{ sensorData['radonShortTermAvg'] | number:'1.0-0' }} Bq/m³
           </span>
         </div>
 
-        <div class="sensor-item" *ngIf="sensorData['voc']" title="VOC">
+        <div class="sensor-item" *ngIf="sensorData['voc']">
           <mat-icon>science</mat-icon>
+          <span class="sensor-label">VOC</span>
           <span [class]="'sensor-value ' + getSensorStatus('voc', sensorData['voc'])">
             {{ sensorData['voc'] | number:'1.0-0' }}
           </span>
         </div>
 
-        <div class="sensor-item" *ngIf="sensorData['pressure']" title="Pression">
+        <div class="sensor-item" *ngIf="sensorData['pressure']">
           <mat-icon>compress</mat-icon>
+          <span class="sensor-label">Press.</span>
           <span class="sensor-value">
             {{ sensorData['pressure'] | number:'1.0-0' }} hPa
           </span>
         </div>
 
-        <div class="sensor-item" *ngIf="sensorData['pm25']" title="PM2.5">
+        <div class="sensor-item" *ngIf="sensorData['pm25']">
           <mat-icon>blur_on</mat-icon>
+          <span class="sensor-label">PM2.5</span>
           <span [class]="'sensor-value ' + getSensorStatus('pm25', sensorData['pm25'])">
             {{ sensorData['pm25'] | number:'1.0-0' }} μg/m³
           </span>
         </div>
 
-        <div class="sensor-item" *ngIf="sensorData['pm1']" title="PM1">
+        <div class="sensor-item" *ngIf="sensorData['pm1']">
           <mat-icon>blur_circular</mat-icon>
+          <span class="sensor-label">PM1</span>
           <span [class]="'sensor-value ' + getSensorStatus('pm1', sensorData['pm1'])">
             {{ sensorData['pm1'] | number:'1.0-0' }} μg/m³
           </span>
