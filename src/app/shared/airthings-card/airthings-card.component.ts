@@ -23,11 +23,15 @@ export class AirthingsCardComponent {
   // Formate le nom du device pour l'affichage
   // ex: "view-plus-sous-sol" → "View Plus Sous Sol"
   formatDeviceName(name: string): string {
-    return name
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  }
+  const withoutPrefix = name
+    .replace(/^Air View /i, '')
+    .replace(/^View Plus /i, '');
+
+  return withoutPrefix
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
 
   // Retourne le statut de qualité selon le type de capteur et sa valeur
   // Valeurs possibles : 'good', 'medium', 'bad', 'critical'

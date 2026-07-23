@@ -91,12 +91,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  // Filtre et trie les capteurs Airthings par nom de pièce (alphabétique)
   get airthingsDevices(): Device[] {
-    return this.devices.filter(d => d.brand === 'AIRTHINGS');
+    return this.devices
+      .filter(d => d.brand === 'AIRTHINGS')
+      .sort((a, b) => this.cleanAirthingsName(a.name).localeCompare(this.cleanAirthingsName(b.name)));
   }
 
+  // Filtre et trie les thermostats Sinopé par nom de pièce (alphabétique)
   get sinopeDevices(): Device[] {
-    return this.devices.filter(d => d.brand === 'SINOPE');
+    return this.devices
+      .filter(d => d.brand === 'SINOPE')
+      .sort((a, b) => this.cleanThermostatName(a.name).localeCompare(this.cleanThermostatName(b.name)));
+  }
+
+  // Retire les préfixes Airthings pour un tri cohérent avec l'affichage
+  private cleanAirthingsName(name: string): string {
+    return name.replace(/^Air View /i, '').replace(/^View Plus /i, '');
+  }
+
+  // Retire le préfixe "thermostat-" pour un tri cohérent avec l'affichage
+  private cleanThermostatName(name: string): string {
+    return name.replace('thermostat-', '');
   }
 
   get unreadAlerts(): Alert[] {
